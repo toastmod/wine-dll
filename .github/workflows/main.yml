@@ -20,12 +20,26 @@ jobs:
         apt: git build-essential flex bison autoconf libtool libfreetype-dev libx11-dev libxext-dev libxi-dev libxrandr-dev libxcursor-dev libxinerama-dev libxrender-dev libxcomposite-dev
 
     - name: Install MinGW
-      uses: egor-tensin/setup-mingw@v2    
+      uses: egor-tensin/setup-mingw@v2   
 
-    - name: configure
+    - name: Make tools dir
       # Windows 64-bit build config
-      run: ./configure --host=x86_64-w64-mingw32 --with-wine-tools=../wine-tools --without-x --disable-tests --enable-win64
+      run: mkdir wine-tools
       # Windows 32-bit build config
       #run: ./configure --host=i686-w64-mingw32 --without-x --disable-tests
-    - name: make
+
+    - name: configure Wine Tools
+      working-directory: wine-tools
+      run: ../configure 
+    - name: make Wine Tools
+      working-directory: wine-tools
+      run: make -j$(nproc)
+
+    - name: configure Windows build
+      # Windows 64-bit build config
+      run: ./configure --host=x86_64-w64-mingw32 --with-wine-tools=./wine-tools --without-x --disable-tests --enable-win64
+      # Windows 32-bit build config
+      #run: ./configure --host=i686-w64-mingw32 --without-x --disable-tests
+      
+    - name: make Wine for Windows x64
       run: make -j$(nproc)
