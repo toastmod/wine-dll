@@ -30,7 +30,7 @@ jobs:
 
     - name: configure Wine Tools
       working-directory: wine-tools
-      run: ../configure 
+      run: ../configure --disable-tests --without-x --enable-win64
     - name: make Wine Tools
       working-directory: wine-tools
       run: make -j$(nproc)
