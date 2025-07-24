@@ -36,10 +36,6 @@ jobs:
         rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
         tar -xf mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
         rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
-        mkdir /usr/x86_64-w64-mingw32
-        mkdir /usr/x86_64-w64-mingw32/include
-        mkdir /usr/x86_64-w64-mingw32/lib
-        mkdir /usr/x86_64-w64-mingw32/lib/pkgconfig
         sudo cp -r mingw64/include/freetype2 /usr/x86_64-w64-mingw32/include/
         sudo cp -r mingw64/lib/pkgconfig /usr/x86_64-w64-mingw32/lib/pkgconfig
         sudo cp mingw64/lib/libfreetype.a /usr/x86_64-w64-mingw32/lib/
