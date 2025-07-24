@@ -28,7 +28,6 @@ jobs:
         mkdir wine-tools
 
     - name: Setup MinGW freetype
-      if: always()
       working-directory: mingw64-freetype
       run: | 
         wget https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
@@ -40,6 +39,7 @@ jobs:
         sudo cp -r mingw64/lib/pkgconfig /usr/x86_64-w64-mingw32/lib/pkgconfig
         sudo cp mingw64/lib/libfreetype.a /usr/x86_64-w64-mingw32/lib/
         sudo cp mingw64/lib/libfreetype.dll.a /usr/x86_64-w64-mingw32/lib/
+        echo "LD_LIBRARY_PATH=$PWD/mingw64/lib" >> $GITHUB_ENV
 
     - name: configure Wine Tools
       working-directory: wine-tools
