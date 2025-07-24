@@ -22,11 +22,19 @@ jobs:
     - name: Install MinGW
       uses: egor-tensin/setup-mingw@v2   
 
-    - name: Make tools dir
-      # Windows 64-bit build config
-      run: mkdir wine-tools
-      # Windows 32-bit build config
-      #run: ./configure --host=i686-w64-mingw32 --without-x --disable-tests
+    - name: Make directories
+      run: |
+        mkdir mingw64-freetype
+        mkdir wine-tools
+
+    - name: Setup MinGW freetype
+      working-directory: mingw64-freetype
+      run: | 
+        wget https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
+        unzstd mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
+        rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
+        tar -xf mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
+        rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
 
     - name: configure Wine Tools
       working-directory: wine-tools
@@ -37,7 +45,7 @@ jobs:
 
     - name: configure Windows build
       # Windows 64-bit build config
-      run: ./configure --host=x86_64-w64-mingw32 --with-wine-tools=./wine-tools --without-x --disable-tests --enable-win64
+      run: ./configure --host=x86_64-w64-mingw32 --with-freetype-prefix=./mingw64-freetype/mingw64 --with-wine-tools=./wine-tools --without-x --disable-tests --enable-win64
       # Windows 32-bit build config
       #run: ./configure --host=i686-w64-mingw32 --without-x --disable-tests
       
