@@ -28,6 +28,7 @@ jobs:
         mkdir wine-tools
 
     - name: Setup MinGW freetype
+      if: always()
       working-directory: mingw64-freetype
       run: | 
         wget https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
