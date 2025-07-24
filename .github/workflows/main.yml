@@ -35,6 +35,14 @@ jobs:
         rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar.zst
         tar -xf mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
         rm mingw-w64-x86_64-freetype-2.13.3-1-any.pkg.tar
+        mkdir /usr/x86_64-w64-mingw32
+        mkdir /usr/x86_64-w64-mingw32/include
+        mkdir /usr/x86_64-w64-mingw32/lib
+        mkdir /usr/x86_64-w64-mingw32/lib/pkgconfig
+        sudo cp -r mingw64/include/freetype2 /usr/x86_64-w64-mingw32/include/
+        sudo cp -r mingw64/lib/pkgconfig /usr/x86_64-w64-mingw32/lib/pkgconfig
+        sudo cp mingw64/lib/libfreetype.a /usr/x86_64-w64-mingw32/lib/
+        sudo cp mingw64/lib/libfreetype.dll.a /usr/x86_64-w64-mingw32/lib/
 
     - name: configure Wine Tools
       working-directory: wine-tools
@@ -45,7 +53,7 @@ jobs:
 
     - name: configure Windows build
       # Windows 64-bit build config
-      run: ./configure --host=x86_64-w64-mingw32 --with-freetype-prefix=./mingw64-freetype/mingw64 --with-wine-tools=./wine-tools --without-x --disable-tests --enable-win64
+      run: ./configure --host=x86_64-w64-mingw32 --with-wine-tools=./wine-tools --without-x --disable-tests --enable-win64
       # Windows 32-bit build config
       #run: ./configure --host=i686-w64-mingw32 --without-x --disable-tests
       
